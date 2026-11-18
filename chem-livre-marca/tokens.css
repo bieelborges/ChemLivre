@@ -1,0 +1,78 @@
+/* Chem Livre — tokens */
+:root {
+  --fundo: #F6F7F9;
+  --superficie: #FFFFFF;
+  --borda: #E3E6EB;
+  --texto: #0E1116;
+  --texto-corpo: #2B313B;
+  --texto-secundario: #4A5260;
+  --destaque: #1F5FD1;
+  --destaque-contraste: #FFFFFF;
+  --destaque-suave: #E8F0FC;
+  --destaque-texto: #1F5FD1;
+  --redox: #6B2FA3;
+  --redox-suave: #F1EAF8;
+  --coordenacao: #A82A5A;
+  --coordenacao-suave: #FBE9F0;
+  --solidos: #7A5C00;
+  --solidos-suave: #FDF3D0;
+  --acidos: #17704A;
+  --acidos-suave: #E6F4EC;
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 16px;
+  --espaco-4: 24px;
+  --espaco-5: 40px;
+  --espaco-6: 64px;
+  --raio-sm: 10px;
+  --raio-md: 20px;
+  --raio-pilula: 999px;
+  --fonte-titulo: "Geist Serif", Georgia, serif;
+  --fonte-texto: "Hubot Sans", system-ui, sans-serif;
+  --fonte-mono: "Geist Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) {
+:root {
+  --fundo: #0E1116;
+  --superficie: #171B22;
+  --borda: #2A303A;
+  --texto: #F2F4F7;
+  --texto-corpo: #D5DAE2;
+  --texto-secundario: #A3ACBA;
+  --destaque: #7DAAF5;
+  --destaque-contraste: #0E1116;
+  --destaque-suave: #16263F;
+  --destaque-texto: #8FB8F2;
+  --redox: #C7A6EE;
+  --redox-suave: #2A1F3A;
+  --coordenacao: #F29BBE;
+  --coordenacao-suave: #3A1B28;
+  --solidos: #F2C94C;
+  --solidos-suave: #352B0E;
+  --acidos: #6FD3A3;
+  --acidos-suave: #13301F;
+}
+}
+[data-tema="escuro"] {
+  --fundo: #0E1116;
+  --superficie: #171B22;
+  --borda: #2A303A;
+  --texto: #F2F4F7;
+  --texto-corpo: #D5DAE2;
+  --texto-secundario: #A3ACBA;
+  --destaque: #7DAAF5;
+  --destaque-contraste: #0E1116;
+  --destaque-suave: #16263F;
+  --destaque-texto: #8FB8F2;
+  --redox: #C7A6EE;
+  --redox-suave: #2A1F3A;
+  --coordenacao: #F29BBE;
+  --coordenacao-suave: #3A1B28;
+  --solidos: #F2C94C;
+  --solidos-suave: #352B0E;
+  --acidos: #6FD3A3;
+  --acidos-suave: #13301F;
+}
+@font-face { font-family: "Geist Serif"; src: url("fonts/GeistSerif-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: "Hubot Sans"; src: url("fonts/HubotSans-Variable.woff2") format("woff2"); font-weight: 200 900; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }

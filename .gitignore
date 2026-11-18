@@ -1,0 +1,30 @@
+# ============================================================
+# .gitignore — lista de coisas que o Git deve IGNORAR.
+# Nada que esteja aqui vai para o GitHub.
+# ============================================================
+
+# Acervo de referência (PDFs de aulas, livros, trabalhos de colegas).
+# CRÍTICO: o repositório é público e não temos permissão para
+# compartilhar esse material. Ele fica só no seu Mac.
+referencias/
+
+# Dependências baixadas pelo npm (recriadas com `npm install`).
+node_modules/
+
+# Site gerado pelo Astro (recriado com `npm run build`).
+dist/
+.astro/
+
+# Arquivos de configuração local e segredos (senhas, chaves).
+.env
+.env.*
+
+# Arquivos automáticos do macOS e de editores.
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# Esboço visual do site (2,9 MB, com imagens e fontes embutidas).
+# Fica só no Mac, para consulta; decisão de 18/11/2026.
+Chem Livre — Esboço do site.html
