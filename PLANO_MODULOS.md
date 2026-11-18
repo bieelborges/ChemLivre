@@ -347,14 +347,16 @@ Estrutura (azul), Ácidos e bases (verde), Sólidos (amarelo), Redox (roxo), Coo
 | Fase | Conteúdo | Algo testável ao final |
 |---|---|---|
 | 0 | Planejamento + revisão (identidade visual, trilha com 16 módulos, este plano, roteiros de referência) | Documentos aprovados |
-| 1 | Esqueleto: Astro + framework das ilhas, tokens claro/escuro, fontes, página inicial, menu, página da trilha com os 16 módulos, layout de módulo, deploy | Site no ar com tema claro/escuro |
-| 2 | Primeiro módulo completo (**VSEPR**): texto, **Montador de geometria**, `Molecula3D`, motor de questões (4 tipos), 5 questões comentadas | Módulo modelo funcionando no celular e no computador |
-| 3 | Laboratório virtual: 1º experimento dos roteiros de referência + modo demonstração | Bancada jogável |
-| 4 | Equipamento por dentro: espectrofotômetro UV-Vis (ligado à curva do laboratório) | Página com rolagem animada |
+| 1 | Esqueleto: Astro + framework das ilhas, tokens claro/escuro, fontes, página inicial, menu, página da trilha com os 16 módulos, layout de módulo, deploy, página `/estilo` (base) | Site no ar com tema claro/escuro |
+| 2 | Primeiro módulo completo (**VSEPR**): texto, **Montador de geometria**, `Molecula3D`, motor de questões (4 tipos), 5 questões comentadas; ilustração **registro C** (moléculas) | Módulo modelo funcionando no celular e no computador |
+| 3 | Laboratório virtual: 1º experimento dos roteiros de referência + modo demonstração; ilustração **registro A** (vidrarias) e GHS | Bancada jogável |
+| 4 | Equipamento por dentro: espectrofotômetro UV-Vis (ligado à curva do laboratório); ilustração **registro B**, a partir do teste aprovado em `testes/` | Página com a vista explodida e leitura ao vivo |
 | 5 | Demais módulos, **um por vez**, na ordem da trilha (cada um é uma subfase: 5.1, 5.2…) | Um módulo novo a cada subfase |
 | 6 | Revisão: celular, acessibilidade, opinião de alunos, guia "como criar uma nova área" | Relatório de revisão |
 | 7 | Comunidade, login e **progresso** (mapa, XP, sequência, repetição espaçada); comparar Supabase, Giscus e fórum externo; termos e LGPD | Conta de aluno com progresso salvo |
 | Futuro | Tutor de IA, newsletter, cursos, painel administrativo | — |
+
+Ilustrações: o guia `docs/ESTILO_ILUSTRACAO.md` (4 registros) é aplicado **aos poucos, por fase** (decisão de 18/11/2026).
 
 ---
 

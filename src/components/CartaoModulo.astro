@@ -1,0 +1,85 @@
+---
+// CartaoModulo.astro — cartão de um módulo da trilha.
+// Mostra o número, a etiqueta da área, o título, o resumo e o estado.
+// Usado na página inicial e na página da trilha.
+import type { CollectionEntry } from 'astro:content';
+import { NOME_DA_AREA } from '../lib/areas';
+import { url } from '../lib/caminhos';
+
+interface Props {
+  modulo: CollectionEntry<'inorganica'>;
+  /** Nível do título dentro da página (h2 ou h3), para a hierarquia ficar certa. */
+  nivel?: 'h2' | 'h3';
+}
+
+const { modulo, nivel = 'h3' } = Astro.props;
+const { numero, titulo, area, resumo, estado, opcional } = modulo.data;
+const Titulo = nivel;
+---
+
+<article class="cartao cartao-modulo" data-area={area}>
+  <div class="topo">
+    <span class="numero mono" aria-hidden="true">{String(numero).padStart(2, '0')}</span>
+    <span class="etiqueta">{NOME_DA_AREA[area]}</span>
+    {estado === 'em-breve' && <span class="estado legenda">Em breve</span>}
+  </div>
+  <Titulo class="titulo">
+    <a href={url(`/inorganica/${modulo.id}`)}>
+      <span class="so-leitor">Módulo {numero}: </span>{titulo}
+    </a>
+    {opcional && <span class="legenda"> (opcional)</span>}
+  </Titulo>
+  <p class="resumo">{resumo}</p>
+</article>
+
+<style>
+  .cartao-modulo {
+    position: relative;
+    display: grid;
+    gap: var(--espaco-3);
+    align-content: start;
+  }
+  .topo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espaco-2);
+  }
+  .numero {
+    color: var(--texto-secundario);
+  }
+  .estado {
+    margin-left: auto;
+  }
+  .titulo {
+    font-family: var(--fonte-texto);
+    font-size: var(--tamanho-h3);
+    line-height: var(--linha-h3);
+    font-weight: 700;
+    letter-spacing: normal;
+  }
+  .titulo a {
+    color: var(--texto);
+    text-decoration: none;
+  }
+  /* O cartão inteiro é clicável, mas só o título é um link de verdade. */
+  .titulo a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--raio-md);
+  }
+  .cartao-modulo:hover {
+    border-color: var(--texto-secundario);
+  }
+  .cartao-modulo:has(a:focus-visible) {
+    outline: var(--contorno-foco) solid var(--destaque);
+    outline-offset: var(--contorno-foco);
+  }
+  .titulo a:focus-visible {
+    outline: none;
+  }
+  .resumo {
+    color: var(--texto-corpo);
+  }
+</style>

@@ -1,0 +1,177 @@
+---
+// Cabecalho.astro — barra do topo: símbolo + nome, menu e botão de tema.
+// No celular, o menu vira um botão "Menu" feito com <details>, que
+// abre e fecha SEM JavaScript (funciona até com internet ruim).
+import Simbolo from './Simbolo.astro';
+import BotaoTema from './BotaoTema.astro';
+import { menuPrincipal } from '../lib/navegacao';
+import { url, estaEm } from '../lib/caminhos';
+
+const atual = Astro.url.pathname;
+---
+
+<header class="cabecalho">
+  <div class="container barra">
+    <a class="marca" href={url('/')}>
+      <Simbolo />
+      <span>Chem Livre</span>
+    </a>
+
+    <nav class="menu-largo" aria-label="Menu principal">
+      <ul>
+        {
+          menuPrincipal.map((item) => (
+            <li>
+              <a
+                href={url(item.caminho)}
+                aria-current={estaEm(atual, item.caminho) ? 'page' : undefined}
+              >
+                {item.rotulo}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="acoes">
+      <BotaoTema />
+      <details class="menu-celular">
+        <summary>
+          <span class="so-leitor">Abrir o menu</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </summary>
+        <nav aria-label="Menu principal">
+          <ul>
+            {
+              menuPrincipal.map((item) => (
+                <li>
+                  <a
+                    href={url(item.caminho)}
+                    aria-current={estaEm(atual, item.caminho) ? 'page' : undefined}
+                  >
+                    {item.rotulo}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .cabecalho {
+    background: var(--superficie);
+    border-bottom: var(--borda-fina) solid var(--borda);
+  }
+  .barra {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-4);
+    min-height: calc(var(--altura-toque) + var(--espaco-4));
+  }
+  .marca {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    font-size: var(--tamanho-h3);
+    color: var(--texto);
+    text-decoration: none;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .menu-largo {
+    margin-left: auto;
+  }
+  .menu-largo ul {
+    display: flex;
+    gap: var(--espaco-1);
+  }
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--altura-toque);
+    padding: 0 var(--espaco-3);
+    border-radius: var(--raio-pilula);
+    color: var(--texto-secundario);
+    font-size: var(--tamanho-rotulo);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  nav a:hover {
+    color: var(--texto);
+  }
+  nav a[aria-current='page'] {
+    background: var(--destaque-suave);
+    color: var(--destaque-texto);
+  }
+  .acoes {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-2);
+  }
+
+  /* --- Menu do celular --- */
+  .menu-celular {
+    position: relative;
+  }
+  .menu-celular summary {
+    display: grid;
+    place-items: center;
+    width: var(--altura-toque);
+    height: var(--altura-toque);
+    border: var(--borda-fina) solid var(--borda);
+    border-radius: var(--raio-pilula);
+    color: var(--texto);
+    cursor: pointer;
+    list-style: none;
+  }
+  .menu-celular summary::-webkit-details-marker {
+    display: none;
+  }
+  .menu-celular svg {
+    width: var(--espaco-4);
+    height: var(--espaco-4);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+  .menu-celular nav {
+    position: absolute;
+    right: 0;
+    top: calc(100% + var(--espaco-2));
+    z-index: 20;
+    min-width: calc(var(--espaco-6) * 3);
+    padding: var(--espaco-2);
+    background: var(--superficie);
+    border: var(--borda-fina) solid var(--borda);
+    border-radius: var(--raio-md);
+  }
+  .menu-celular nav a {
+    display: flex;
+  }
+
+  /* Até 767px: menu recolhido. A partir de 768px: menu completo. */
+  @media (max-width: 767px) {
+    .menu-largo {
+      display: none;
+    }
+    .acoes {
+      margin-left: auto;
+    }
+  }
+  @media (min-width: 768px) {
+    .menu-celular {
+      display: none;
+    }
+  }
+</style>

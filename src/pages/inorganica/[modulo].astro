@@ -1,0 +1,114 @@
+---
+// inorganica/[modulo].astro — MODELO de página de módulo.
+// Os colchetes no nome dizem ao Astro: "crie uma página para cada
+// módulo". getStaticPaths lista quais são (os 16 arquivos .mdx).
+import { getCollection, render } from 'astro:content';
+import 'katex/dist/katex.min.css'; // estilo das fórmulas (só nas páginas de módulo)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { NOME_DA_AREA } from '../../lib/areas';
+import { url } from '../../lib/caminhos';
+
+export async function getStaticPaths() {
+  const modulos = (await getCollection('inorganica')).sort((a, b) => a.data.numero - b.data.numero);
+  return modulos.map((modulo, i) => ({
+    params: { modulo: modulo.id },
+    props: { modulo, anterior: modulos[i - 1], proximo: modulos[i + 1] },
+  }));
+}
+
+const { modulo, anterior, proximo } = Astro.props;
+const { numero, titulo, area, resumo, estado } = modulo.data;
+const { Content } = await render(modulo);
+---
+
+<BaseLayout titulo={titulo} descricao={resumo}>
+  <article class="container pagina" data-area={area}>
+    <nav class="trilha legenda" aria-label="Você está em">
+      <a href={url('/inorganica')}>Química Inorgânica</a> / Módulo {numero}
+    </nav>
+
+    <header class="cabeca">
+      <span class="etiqueta">{NOME_DA_AREA[area]}</span>
+      <h1>{titulo}</h1>
+      <p class="resumo">{resumo}</p>
+    </header>
+
+    {
+      estado === 'em-breve' && (
+        <div class="cartao aviso">
+          <h2 class="rotulo">Módulo em preparação</h2>
+          <p>
+            O texto, as simulações e as questões deste módulo ainda estão sendo escritos e revisados.
+          </p>
+        </div>
+      )
+    }
+
+    <div class="texto">
+      <Content />
+    </div>
+
+    <nav class="vizinhos" aria-label="Módulos vizinhos">
+      {
+        anterior && (
+          <a class="botao botao-secundario" href={url(`/inorganica/${anterior.id}`)}>
+            ← {anterior.data.numero}. {anterior.data.titulo}
+          </a>
+        )
+      }
+      {
+        proximo && (
+          <a class="botao botao-secundario proximo" href={url(`/inorganica/${proximo.id}`)}>
+            {proximo.data.numero}. {proximo.data.titulo} →
+          </a>
+        )
+      }
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .pagina {
+    display: grid;
+    gap: var(--espaco-5);
+    padding-block: var(--espaco-5);
+    max-width: calc(var(--largura-leitura) + var(--espaco-6) * 2);
+  }
+  .cabeca {
+    display: grid;
+    gap: var(--espaco-3);
+    justify-items: start;
+  }
+  .resumo {
+    font-size: var(--tamanho-h3);
+    line-height: var(--linha-h3);
+  }
+  .aviso {
+    display: grid;
+    gap: var(--espaco-2);
+    border-style: dashed;
+  }
+  /* Texto do módulo: parágrafos e títulos com respiro. */
+  .texto {
+    display: grid;
+    gap: var(--espaco-3);
+  }
+  .texto :global(h2) {
+    margin-top: var(--espaco-4);
+  }
+  .texto :global(.katex-display) {
+    overflow-x: auto;
+    padding: var(--espaco-3);
+    border-radius: var(--raio-sm);
+    background: var(--superficie);
+    border: var(--borda-fina) solid var(--borda);
+  }
+  .vizinhos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espaco-3);
+  }
+  .vizinhos .proximo {
+    margin-left: auto;
+  }
+</style>

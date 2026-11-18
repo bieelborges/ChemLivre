@@ -1,0 +1,38 @@
+---
+// Simbolo.astro — o símbolo "Órbita em C" da marca.
+// O desenho é o mesmo de chem-livre-marca/logos/, mas pinta com os
+// tokens (--destaque no arco, --texto no elétron): assim troca de
+// tema sozinho, sem precisar de dois arquivos.
+// Regras da marca: não girar, sem degradê, não trocar a cor do elétron.
+interface Props {
+  /** Texto para leitor de tela. Vazio = decorativo (o nome já está ao lado). */
+  descricao?: string;
+}
+const { descricao = '' } = Astro.props;
+---
+
+<svg
+  class="simbolo"
+  viewBox="0 0 180 180"
+  xmlns="http://www.w3.org/2000/svg"
+  role={descricao ? 'img' : undefined}
+  aria-label={descricao || undefined}
+  aria-hidden={descricao ? undefined : 'true'}
+>
+  <path d="M136 52 A60 60 0 1 0 136 128" fill="none" stroke-width="22" stroke-linecap="round" />
+  <circle cx="136" cy="128" r="18" />
+</svg>
+
+<style>
+  .simbolo {
+    width: var(--espaco-5);
+    height: var(--espaco-5);
+    flex-shrink: 0;
+  }
+  path {
+    stroke: var(--destaque);
+  }
+  circle {
+    fill: var(--texto);
+  }
+</style>

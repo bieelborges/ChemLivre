@@ -23,7 +23,7 @@ aprendizagem em Química:
 | Fase | Descrição | Situação |
 |---|---|---|
 | 0 | Planejamento (revisão de 13/11: identidade visual, trilha com 16 módulos, recursos interativos) | ✅ concluída |
-| 1 | Esqueleto do site, identidade visual e publicação | ⏳ próxima |
+| 1 | Esqueleto do site, identidade visual e publicação | ⏳ em andamento |
 | 2 | Primeiro módulo completo (VSEPR) | — |
 | 3 | Laboratório virtual | — |
 | 4 | Equipamento por dentro (espectrofotômetro UV-Vis) | — |
@@ -33,10 +33,45 @@ aprendizagem em Química:
 
 O plano detalhado da trilha está em [PLANO_MODULOS.md](PLANO_MODULOS.md).
 
+## Como rodar o site no seu computador
+
+Precisa do [Node.js](https://nodejs.org/) (versão 22 ou mais nova). No terminal, dentro da pasta do projeto:
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
+
+Depois abra http://localhost:4321/ChemLivre/ no navegador. As mudanças nos arquivos aparecem na hora.
+
+| Comando | O que faz |
+|---|---|
+| `npm install` | Baixa as bibliotecas do projeto (só na primeira vez ou quando o `package.json` muda) |
+| `npm run dev` | Abre o site no seu computador, atualizando a cada mudança |
+| `npm run build` | Gera o site final na pasta `dist/` (o mesmo que o GitHub faz ao publicar) |
+| `npx astro check` | Procura erros no código |
+
+## Onde fica cada coisa
+
+| Pasta ou arquivo | Para que serve |
+|---|---|
+| `src/content/inorganica/` | **Um arquivo por módulo da trilha** (texto em MDX). É aqui que o conteúdo é escrito. |
+| `src/pages/` | As páginas do site (cada arquivo vira um endereço) |
+| `src/components/` | Peças reutilizáveis (cabeçalho, cartão de módulo, diagramas…) |
+| `src/layouts/` | A moldura comum de todas as páginas |
+| `src/styles/global.css` | Estilos-base, feitos só com os tokens da marca |
+| `src/lib/` | Funções auxiliares (tema, endereços, áreas, progresso e tutor) |
+| `chem-livre-marca/` | **Fonte única da marca**: cores, fontes e símbolo |
+| `.github/workflows/publicar.yml` | O robô que publica o site no GitHub Pages |
+
 ## Licenças
 
 - **Conteúdo didático** (textos, questões, roteiros): [Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)](LICENSE-CONTEUDO.md).
 - **Código-fonte**: [MIT](LICENSE).
+- **Fontes** (Geist Serif, Geist Mono, Hubot Sans): SIL Open Font License 1.1, textos em `chem-livre-marca/fonts/`.
 
 ## Autor
 

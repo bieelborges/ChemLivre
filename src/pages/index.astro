@@ -1,0 +1,173 @@
+---
+// index.astro — página inicial.
+// Partes: hero (com a prévia do campo cristalino), "Como funciona",
+// alguns módulos da trilha e chamadas para Laboratório e Equipamentos.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CartaoModulo from '../components/CartaoModulo.astro';
+import DiagramaCampoCristalino from '../components/DiagramaCampoCristalino.astro';
+import { url } from '../lib/caminhos';
+
+const modulos = (await getCollection('inorganica')).sort((a, b) => a.data.numero - b.data.numero);
+// Na página inicial, uma amostra de cada parte da trilha.
+const destaques = [1, 2, 7, 10].map((n) => modulos.find((m) => m.data.numero === n)!);
+
+const passos = [
+  { nome: 'Veja', texto: 'Moléculas, orbitais e diagramas que você gira, amplia e compara.' },
+  { nome: 'Mexa', texto: 'Mude uma variável e observe a consequência: aprender mexendo.' },
+  { nome: 'Pratique', texto: 'Questões no estilo de provas e concursos, com dicas em passos.' },
+];
+---
+
+<BaseLayout
+  titulo="Chem Livre"
+  descricao="Química de nível superior, visual, aberta e gratuita. Trilha de Química Inorgânica com simulações e questões comentadas."
+  barraInferior={false}
+>
+  <section class="container hero">
+    <div class="hero-texto">
+      <p class="rotulo sobretitulo">Química sem muros</p>
+      <h1 class="display">Química de nível superior, para ver e mexer.</h1>
+      <p class="chamada">
+        Uma plataforma aberta e gratuita para graduação, pós-graduação e concursos. Começamos pela
+        Química Inorgânica, um módulo de cada vez.
+      </p>
+      <div class="botoes">
+        <a class="botao botao-principal" href={url('/inorganica')}>Começar a trilha</a>
+        <a class="botao botao-secundario" href="#como-funciona">Como funciona</a>
+      </div>
+    </div>
+    <div class="cartao hero-visual">
+      <DiagramaCampoCristalino
+        descricao="Diagrama qualitativo: os cinco orbitais d do íon livre se separam, no campo octaédrico, em três orbitais t2g de menor energia e dois orbitais eg de maior energia, separados por delta o."
+      />
+    </div>
+  </section>
+
+  <section class="container secao" id="como-funciona" aria-labelledby="titulo-como">
+    <h2 id="titulo-como">Como funciona</h2>
+    <ol class="passos">
+      {
+        passos.map((passo, i) => (
+          <li class="cartao">
+            <span class="mono numero-passo">{i + 1}</span>
+            <h3>{passo.nome}</h3>
+            <p>{passo.texto}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="container secao" aria-labelledby="titulo-trilha">
+    <div class="cabeca-secao">
+      <h2 id="titulo-trilha">Trilha de Química Inorgânica</h2>
+      <a class="botao botao-secundario" href={url('/inorganica')}>Ver os {modulos.length} módulos</a>
+    </div>
+    <div class="grade-modulos">
+      {destaques.map((modulo) => <CartaoModulo modulo={modulo} />)}
+    </div>
+  </section>
+
+  <section class="container secao chamadas" aria-label="Outras seções">
+    <article class="cartao">
+      <h2>Laboratório virtual</h2>
+      <p>Experimentos de Química Inorgânica para executar na tela, passo a passo, antes ou depois da aula prática.</p>
+      <a class="botao botao-secundario" href={url('/laboratorio')}>Conhecer o laboratório</a>
+    </article>
+    <article class="cartao">
+      <h2>Equipamentos por dentro</h2>
+      <p>Como funciona um espectrofotômetro e outros instrumentos, peça por peça.</p>
+      <a class="botao botao-secundario" href={url('/equipamentos')}>Ver os equipamentos</a>
+    </article>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    gap: var(--espaco-5);
+    align-items: center;
+    padding-block: var(--espaco-5);
+  }
+  .hero-texto {
+    display: grid;
+    gap: var(--espaco-4);
+  }
+  .sobretitulo {
+    color: var(--destaque-texto);
+  }
+  .chamada {
+    max-width: var(--largura-leitura);
+    font-size: var(--tamanho-h3);
+    line-height: var(--linha-h3);
+  }
+  .botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espaco-3);
+  }
+  .secao {
+    display: grid;
+    gap: var(--espaco-4);
+    padding-block: var(--espaco-5);
+  }
+  .cabeca-secao {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-3);
+  }
+  .passos {
+    display: grid;
+    gap: var(--espaco-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .passos li {
+    display: grid;
+    gap: var(--espaco-2);
+  }
+  .numero-passo {
+    color: var(--destaque-texto);
+  }
+  .grade-modulos,
+  .chamadas {
+    display: grid;
+    gap: var(--espaco-4);
+  }
+  .chamadas article {
+    display: grid;
+    gap: var(--espaco-3);
+    justify-items: start;
+  }
+
+  /* No celular, os botões ocupam a largura toda. */
+  @media (max-width: 767px) {
+    .botoes .botao {
+      width: 100%;
+    }
+  }
+  /* Tablet: 2 colunas de módulos e 3 de "Como funciona". */
+  @media (min-width: 768px) {
+    .passos {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .grade-modulos,
+    .chamadas {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  /* Desktop: hero em duas colunas e 4 módulos lado a lado. */
+  @media (min-width: 1024px) {
+    .hero {
+      grid-template-columns: 1.2fr 1fr;
+      padding-block: var(--espaco-6);
+    }
+    .grade-modulos {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>

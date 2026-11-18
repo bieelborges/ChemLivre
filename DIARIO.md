@@ -5,6 +5,46 @@
 
 ---
 
+## Fase 1 — Esqueleto do site (18/11/2026, em andamento)
+
+### O que fizemos
+- **Commit inicial** (`957a593`), conferido antes: sem `referencias/`, sem o esboço (que ficou só no Mac) e com o
+  **e-mail privado do GitHub** nos commits, para o Gmail não ficar público.
+- Licenças das fontes conferidas nos repositórios oficiais: as três são **SIL OFL 1.1**; o texto da licença foi
+  para `chem-livre-marca/fonts/`. A Hubot Sans tem "nome reservado": se recortarmos o arquivo, a versão
+  recortada precisa de outro nome.
+- Projeto **Astro 7 + Svelte + MDX + KaTeX/mhchem**. O Astro 7 trocou o leitor de Markdown; usamos o
+  processador "clássico" para as fórmulas funcionarem. KaTeX numa só versão (0.19.1), sem o alerta de segurança.
+- **Tema**: o defeito do `tokens.css` foi corrigido na própria pasta da marca (a escolha manual agora vence o
+  sistema nos dois sentidos) e o site importa esse arquivo direto, sem cópia. Família Elementos incluída.
+- Páginas: início (com diagrama qualitativo do campo cristalino, sem números), trilha com os 16 módulos,
+  modelo de página de módulo, Laboratório, Equipamentos, Questões, Meu progresso e Sobre (esqueletos).
+- Celular: menu recolhido que funciona sem JavaScript e barra inferior com 4 itens.
+- Robô de publicação (`.github/workflows/publicar.yml`), pronto para o primeiro envio ao GitHub.
+- Estilo de ilustração: o prompt v2 virou o guia permanente `docs/ESTILO_ILUSTRACAO.md`, aplicado **por fase**
+  (moléculas na Fase 2, vidrarias na 3, equipamentos por dentro na 4). Nova página `/estilo` (fora do menu):
+  mostruário das cores, tipografia, botões e etiquetas, nos dois temas.
+
+### O que aprendi (resumo do professor)
+1. **Conferir antes de registrar**: o que entra num commit público fica no histórico para sempre, inclusive o e-mail.
+2. **Versões importam**: duas cópias do KaTeX fariam o `\ce{}` falhar em silêncio; o npm *overrides* padroniza.
+3. **Ler a documentação da versão instalada**: o Astro 7 mudou uma peça; em vez de adivinhar, lemos o próprio pacote.
+4. **Funciona sem JavaScript primeiro**: o menu do celular usa `<details>`, que o navegador já sabe abrir sozinho.
+
+### Pendências
+- [ ] Criar o repositório público `ChemLivre` no GitHub e fazer o primeiro envio (`git push`) — tarefa do Gabriel.
+- [ ] Ativar o GitHub Pages com a fonte "GitHub Actions" (Settings → Pages).
+- [ ] Conferir os resumos dos 16 módulos em `src/content/inorganica/` (texto meu, a partir do PLANO).
+- [ ] Escrever o texto da página "Sobre".
+- [ ] Recortar as fontes (*subsetting*) e medir o Lighthouse (meta ≥ 90).
+- [x] `biblioteca-imagens/` e `.zip` fora do Git, exceto `biblioteca-imagens/selecionadas/` (81 imagens de uso livre,
+  licenças conferidas, créditos completos e textos das licenças junto) — 18/11/2026.
+- [ ] Teste "Equipamentos por dentro": escolher a fonte do ε do KMnO₄ em 525 nm (a literatura diverge:
+  ≈ 2,4 × 10³ em roteiros didáticos e 3340 L mol⁻¹ cm⁻¹ num artigo de 2020) e marcar as condições do CG como
+  "exemplo de método" com fonte. Nernst (59,16 mV por unidade de pH a 25 °C) está correto.
+
+---
+
 ## Fase 0 — Ajustes finais (17/11/2026)
 
 ### O que fizemos

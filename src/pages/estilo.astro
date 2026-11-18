@@ -1,0 +1,248 @@
+---
+// estilo.astro — mostruário vivo da marca (ferramenta de trabalho, fora do menu).
+// Tudo aqui vem dos tokens: se mudar uma cor em chem-livre-marca/tokens.css,
+// esta página mostra a mudança na hora. A cada fase, ela ganha as ilustrações
+// novas (docs/ESTILO_ILUSTRACAO.md, seção 11), para revisar nos dois temas.
+import katex from 'katex';
+import 'katex/contrib/mhchem';
+import 'katex/dist/katex.min.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { AREAS, NOME_DA_AREA } from '../lib/areas';
+
+// Fórmula de exemplo desenhada na construção do site (zero JavaScript).
+const formula = katex.renderToString(String.raw`\ce{[Co(NH3)6]^3+}`, { output: 'htmlAndMathml' });
+
+const neutros = [
+  ['fundo', 'fundo da página'],
+  ['superficie', 'cartões e painéis'],
+  ['borda', 'divisórias e contornos'],
+  ['texto', 'títulos e texto principal'],
+  ['texto-corpo', 'parágrafos longos'],
+  ['texto-secundario', 'legendas e rótulos'],
+  ['destaque', 'única cor de ação'],
+  ['destaque-suave', 'botão secundário'],
+];
+
+const tipos = [
+  { classe: 'display', nome: 'Display · Geist Serif 56', texto: 'Química sem muros' },
+  { classe: 'h1', nome: 'H1 · Geist Serif 40', texto: 'Campo cristalino' },
+  { classe: 'h2', nome: 'H2 · Geist Serif 30', texto: 'Desdobramento octaédrico' },
+  { classe: 'h3', nome: 'H3 · Hubot Sans 20', texto: 'Spin alto e spin baixo' },
+  { classe: 'corpo', nome: 'Corpo · Hubot Sans 17/28', texto: 'Repare que os orbitais apontados para os ligantes sobem de energia.' },
+  { classe: 'rotulo', nome: 'Rótulo · Hubot Sans 14', texto: 'Módulo 10' },
+  { classe: 'legenda', nome: 'Legenda · Hubot Sans 13', texto: 'Modelo qualitativo, sem valores numéricos.' },
+];
+
+const registros = [
+  { letra: 'A', nome: 'Vidrarias e soluções', fase: 'Fase 3 (laboratório)' },
+  { letra: 'B', nome: 'Equipamentos por dentro', fase: 'Fase 4 (equipamento)' },
+  { letra: 'C', nome: 'Moléculas e modelos', fase: 'Fase 2 (VSEPR)' },
+  { letra: 'D', nome: 'Ícones e pictogramas', fase: 'quando a interface precisar' },
+];
+---
+
+<BaseLayout
+  titulo="Estilo"
+  descricao="Mostruário da identidade visual do Chem Livre: cores, tipografia, botões, etiquetas e ilustrações."
+>
+  <div class="container pagina">
+    <header class="cabeca">
+      <p class="rotulo sobretitulo">Ferramenta de trabalho</p>
+      <h1>Mostruário de estilo</h1>
+      <p class="intro">
+        Tudo nesta página vem dos tokens da marca. Use o botão de tema no topo para conferir o modo
+        claro e o escuro.
+      </p>
+    </header>
+
+    <section aria-labelledby="t-areas">
+      <h2 id="t-areas">Famílias de cor das áreas</h2>
+      <p class="legenda">Só em etiquetas, ícones e botões da própria área, sempre no par cor + suave.</p>
+      <ul class="grade">
+        {
+          AREAS.map((area) => (
+            <li class="cartao amostra-area" data-area={area}>
+              <span class="etiqueta">{NOME_DA_AREA[area]}</span>
+              <button type="button" class="botao botao-area">Abrir simulação</button>
+              <code class="legenda">--{area === 'estrutura' ? 'destaque-texto' : area}</code>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="t-neutros">
+      <h2 id="t-neutros">Neutros e destaque</h2>
+      <ul class="grade">
+        {
+          neutros.map(([token, uso]) => (
+            <li class="amostra">
+              <span class="cor" style={`background: var(--${token})`} />
+              <code>--{token}</code>
+              <span class="legenda">{uso}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="t-tipos">
+      <h2 id="t-tipos">Tipografia</h2>
+      <ul class="lista-tipos">
+        {
+          tipos.map((t) => (
+            <li>
+              <span class="legenda">{t.nome}</span>
+              <p class={`tipo-${t.classe}`}>{t.texto}</p>
+            </li>
+          ))
+        }
+        <li>
+          <span class="legenda">Fórmula · KaTeX + mhchem, e valores em Geist Mono 15</span>
+          <p>
+            <Fragment set:html={formula} />
+            <span class="mono"> · 25,0 °C · 0,48</span>
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="t-botoes">
+      <h2 id="t-botoes">Botões</h2>
+      <p class="legenda">Um botão principal por tela. Altura mínima de 44 px, formato pílula.</p>
+      <div class="linha-botoes">
+        <button type="button" class="botao botao-principal">Principal</button>
+        <button type="button" class="botao botao-secundario">Secundário</button>
+        <span data-area="redox"><button type="button" class="botao botao-area">De área (Redox)</button></span>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-ilustracoes">
+      <h2 id="t-ilustracoes">Ilustrações</h2>
+      <p class="legenda">
+        Regras em <code>docs/ESTILO_ILUSTRACAO.md</code>. Cada registro entra na fase que precisa dele.
+      </p>
+      <ul class="grade">
+        {
+          registros.map((r) => (
+            <li class="cartao registro">
+              <span class="mono letra">{r.letra}</span>
+              <h3>{r.nome}</h3>
+              <p class="legenda">Chega na {r.fase}.</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .pagina {
+    display: grid;
+    gap: var(--espaco-6);
+    padding-block: var(--espaco-5);
+  }
+  section {
+    display: grid;
+    gap: var(--espaco-3);
+  }
+  .cabeca {
+    display: grid;
+    gap: var(--espaco-3);
+  }
+  .sobretitulo {
+    color: var(--destaque-texto);
+  }
+  .intro {
+    max-width: var(--largura-leitura);
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .grade {
+    display: grid;
+    gap: var(--espaco-3);
+    grid-template-columns: repeat(auto-fill, minmax(calc(var(--espaco-6) * 3), 1fr));
+  }
+  .amostra-area,
+  .registro {
+    display: grid;
+    gap: var(--espaco-3);
+    justify-items: start;
+  }
+  .amostra-area .botao {
+    white-space: nowrap;
+  }
+  .amostra {
+    display: grid;
+    gap: var(--espaco-1);
+  }
+  .cor {
+    height: var(--espaco-6);
+    border-radius: var(--raio-sm);
+    border: var(--borda-fina) solid var(--borda);
+  }
+  .lista-tipos {
+    display: grid;
+    gap: var(--espaco-4);
+  }
+  .lista-tipos li {
+    display: grid;
+    gap: var(--espaco-1);
+    padding-bottom: var(--espaco-3);
+    border-bottom: var(--borda-fina) solid var(--borda);
+  }
+  /* Cada linha usa exatamente os tokens do seu estilo. */
+  .tipo-display {
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    color: var(--texto);
+    font-size: var(--tamanho-display);
+    line-height: var(--linha-display);
+    letter-spacing: var(--espacamento-display);
+  }
+  .tipo-h1 {
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    color: var(--texto);
+    font-size: var(--tamanho-h1);
+    line-height: var(--linha-h1);
+    letter-spacing: var(--espacamento-h1);
+  }
+  .tipo-h2 {
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    color: var(--texto);
+    font-size: var(--tamanho-h2);
+    line-height: var(--linha-h2);
+    letter-spacing: var(--espacamento-h2);
+  }
+  .tipo-h3 {
+    font-weight: 700;
+    color: var(--texto);
+    font-size: var(--tamanho-h3);
+    line-height: var(--linha-h3);
+  }
+  .tipo-rotulo {
+    font-size: var(--tamanho-rotulo);
+    line-height: var(--linha-rotulo);
+    font-weight: 600;
+  }
+  .tipo-legenda {
+    font-size: var(--tamanho-legenda);
+    line-height: var(--linha-legenda);
+    font-weight: 500;
+    color: var(--texto-secundario);
+  }
+  .linha-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espaco-3);
+  }
+  .letra {
+    color: var(--destaque-texto);
+  }
+</style>

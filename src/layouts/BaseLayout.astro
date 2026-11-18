@@ -1,0 +1,65 @@
+---
+// BaseLayout.astro — a "moldura" de todas as páginas:
+// <head> (título, descrição, ícone, tema), cabeçalho, conteúdo e rodapé.
+// Cada página escreve só o seu miolo e entrega aqui pelo <slot />.
+import '../../chem-livre-marca/tokens.css'; // fonte única da marca
+import '../styles/global.css';
+import Cabecalho from '../components/Cabecalho.astro';
+import Rodape from '../components/Rodape.astro';
+import BarraInferior from '../components/BarraInferior.astro';
+import { url } from '../lib/caminhos';
+
+interface Props {
+  /** Título da página (aparece na aba do navegador). */
+  titulo: string;
+  /** Resumo de 1 frase, usado por buscadores e ao compartilhar o link. */
+  descricao: string;
+  /** Barra de navegação inferior no celular (páginas internas). */
+  barraInferior?: boolean;
+}
+
+const { titulo, descricao, barraInferior = true } = Astro.props;
+const tituloCompleto = titulo === 'Chem Livre' ? titulo : `${titulo} · Chem Livre`;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    <link rel="icon" type="image/svg+xml" href={`${url('/')}favicon.svg`} />
+    <meta name="theme-color" content="#F6F7F9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0E1116" media="(prefers-color-scheme: dark)" />
+    <!--
+      Aplica o tema escolhido pelo aluno ANTES de desenhar a página,
+      para não "piscar" claro e depois escuro. É curto e fica direto no
+      HTML (is:inline). Usa a mesma chave de src/lib/preferencias.ts.
+    -->
+    <script is:inline>
+      try {
+        var tema = localStorage.getItem('chemlivre:tema');
+        if (tema === 'claro' || tema === 'escuro') document.documentElement.dataset.tema = tema;
+      } catch (e) {}
+    </script>
+  </head>
+  <body class:list={{ 'com-barra-inferior': barraInferior }}>
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+    <Cabecalho />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Rodape />
+    {barraInferior && <BarraInferior />}
+  </body>
+</html>
+
+<style is:global>
+  /* Reserva espaço para a barra inferior não cobrir o rodapé no celular. */
+  @media (max-width: 767px) {
+    body.com-barra-inferior {
+      padding-bottom: calc(var(--altura-toque) + var(--espaco-5));
+    }
+  }
+</style>

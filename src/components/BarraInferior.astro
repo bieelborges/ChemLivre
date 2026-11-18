@@ -1,0 +1,84 @@
+---
+// BarraInferior.astro — navegação fixa no rodapé da tela, SÓ no celular
+// (até 767px) e só nas páginas internas. 4 itens com ícone + rótulo.
+import { menuCelular } from '../lib/navegacao';
+import { url, estaEm } from '../lib/caminhos';
+
+const atual = Astro.url.pathname;
+
+// Desenho de cada ícone (traços simples, 24×24).
+const icones = {
+  inicio: 'M4 11 12 4l8 7v9h-5v-6H9v6H4z',
+  trilhas: 'M6 4v16M6 6h12l-3 4 3 4H6',
+  lab: 'M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M7.5 15h9',
+  perfil: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0',
+};
+---
+
+<nav class="barra-inferior" aria-label="Navegação rápida">
+  <ul>
+    {
+      menuCelular.map((item) => (
+        <li>
+          <a
+            href={url(item.caminho)}
+            aria-current={estaEm(atual, item.caminho) ? 'page' : undefined}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d={icones[item.icone]} />
+            </svg>
+            <span>{item.rotulo}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .barra-inferior {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 30;
+    background: var(--superficie);
+    border-top: var(--borda-fina) solid var(--borda);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espaco-1);
+    min-height: calc(var(--altura-toque) + var(--espaco-3));
+    color: var(--texto-secundario);
+    font-size: var(--tamanho-legenda);
+    line-height: var(--linha-legenda);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  a[aria-current='page'] {
+    color: var(--destaque-texto);
+  }
+  svg {
+    width: var(--espaco-4);
+    height: var(--espaco-4);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @media (min-width: 768px) {
+    .barra-inferior {
+      display: none;
+    }
+  }
+</style>

@@ -1,5 +1,16 @@
-/* Chem Livre — tokens */
+/* ============================================================
+   Chem Livre — tokens de design (FONTE ÚNICA da marca)
+   O site importa este arquivo diretamente; não copie os valores.
+   Ajustes de 18/11/2026:
+   - família Elementos (dicromato), aprovada em 17/11/2026;
+   - escala de tipografia (de tokens.json) em rem;
+   - a escolha manual de tema vence o sistema nos dois sentidos;
+   - color-scheme, para barras de rolagem e campos no tema certo.
+   ============================================================ */
+
+/* ---------- Modo claro (padrão) ---------- */
 :root {
+  color-scheme: light;
   --fundo: #F6F7F9;
   --superficie: #FFFFFF;
   --borda: #E3E6EB;
@@ -18,21 +29,76 @@
   --solidos-suave: #FDF3D0;
   --acidos: #17704A;
   --acidos-suave: #E6F4EC;
+  --elementos: #A3440B;
+  --elementos-suave: #FDEEE4;
+
+  /* Espaços (escala 4/8) */
   --espaco-1: 4px;
   --espaco-2: 8px;
   --espaco-3: 16px;
   --espaco-4: 24px;
   --espaco-5: 40px;
   --espaco-6: 64px;
+
+  /* Cantos */
   --raio-sm: 10px;
   --raio-md: 20px;
   --raio-pilula: 999px;
+
+  /* Famílias de fonte */
   --fonte-titulo: "Geist Serif", Georgia, serif;
   --fonte-texto: "Hubot Sans", system-ui, sans-serif;
   --fonte-mono: "Geist Mono", ui-monospace, monospace;
+
+  /* Tipografia: tamanho / altura da linha.
+     Em rem (1rem = 16px) para respeitar quem aumenta a letra do navegador.
+     Valores em px entre parênteses, como no tokens.json. */
+  --tamanho-display: 3.5rem;    --linha-display: 3.75rem;   /* 56 / 60 */
+  --tamanho-h1: 2.5rem;         --linha-h1: 2.875rem;       /* 40 / 46 */
+  --tamanho-h2: 1.875rem;       --linha-h2: 2.25rem;        /* 30 / 36 */
+  --tamanho-h3: 1.25rem;        --linha-h3: 1.75rem;        /* 20 / 28 */
+  --tamanho-corpo: 1.0625rem;   --linha-corpo: 1.75rem;     /* 17 / 28 */
+  --tamanho-rotulo: 0.875rem;   --linha-rotulo: 1.25rem;    /* 14 / 20 */
+  --tamanho-legenda: 0.8125rem; --linha-legenda: 1.125rem;  /* 13 / 18 */
+  --tamanho-formula: 0.9375rem; --linha-formula: 1.5rem;    /* 15 / 24 */
+  --espacamento-display: -0.02em;
+  --espacamento-h1: -0.02em;
+  --espacamento-h2: -0.015em;
 }
+
+/* ---------- Modo escuro ----------
+   Vale em dois casos:
+   1. o sistema está escuro E o aluno não escolheu "claro" à mão;
+   2. o aluno escolheu "escuro" à mão (mesmo com o sistema claro).
+   Os valores se repetem nos dois blocos porque o CSS não permite
+   juntar uma regra @media com um seletor comum. Mude os dois juntos. */
 @media (prefers-color-scheme: dark) {
-:root {
+  :root:not([data-tema="claro"]) {
+    color-scheme: dark;
+    --fundo: #0E1116;
+    --superficie: #171B22;
+    --borda: #2A303A;
+    --texto: #F2F4F7;
+    --texto-corpo: #D5DAE2;
+    --texto-secundario: #A3ACBA;
+    --destaque: #7DAAF5;
+    --destaque-contraste: #0E1116;
+    --destaque-suave: #16263F;
+    --destaque-texto: #8FB8F2;
+    --redox: #C7A6EE;
+    --redox-suave: #2A1F3A;
+    --coordenacao: #F29BBE;
+    --coordenacao-suave: #3A1B28;
+    --solidos: #F2C94C;
+    --solidos-suave: #352B0E;
+    --acidos: #6FD3A3;
+    --acidos-suave: #13301F;
+    --elementos: #F5A26E;
+    --elementos-suave: #3A2213;
+  }
+}
+:root[data-tema="escuro"] {
+  color-scheme: dark;
   --fundo: #0E1116;
   --superficie: #171B22;
   --borda: #2A303A;
@@ -51,28 +117,11 @@
   --solidos-suave: #352B0E;
   --acidos: #6FD3A3;
   --acidos-suave: #13301F;
+  --elementos: #F5A26E;
+  --elementos-suave: #3A2213;
 }
-}
-[data-tema="escuro"] {
-  --fundo: #0E1116;
-  --superficie: #171B22;
-  --borda: #2A303A;
-  --texto: #F2F4F7;
-  --texto-corpo: #D5DAE2;
-  --texto-secundario: #A3ACBA;
-  --destaque: #7DAAF5;
-  --destaque-contraste: #0E1116;
-  --destaque-suave: #16263F;
-  --destaque-texto: #8FB8F2;
-  --redox: #C7A6EE;
-  --redox-suave: #2A1F3A;
-  --coordenacao: #F29BBE;
-  --coordenacao-suave: #3A1B28;
-  --solidos: #F2C94C;
-  --solidos-suave: #352B0E;
-  --acidos: #6FD3A3;
-  --acidos-suave: #13301F;
-}
+
+/* ---------- Fontes (licença SIL OFL 1.1; textos em fonts/OFL-*.txt) ---------- */
 @font-face { font-family: "Geist Serif"; src: url("fonts/GeistSerif-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
 @font-face { font-family: "Hubot Sans"; src: url("fonts/HubotSans-Variable.woff2") format("woff2"); font-weight: 200 900; font-display: swap; }
 @font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }

@@ -1,0 +1,88 @@
+---
+// inorganica/index.astro — a trilha de Química Inorgânica (16 módulos).
+// O painel de progresso é só um ESPAÇO RESERVADO até a Fase 7 (login).
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CartaoModulo from '../../components/CartaoModulo.astro';
+
+const modulos = (await getCollection('inorganica')).sort((a, b) => a.data.numero - b.data.numero);
+const disponiveis = modulos.filter((m) => m.data.estado === 'disponivel').length;
+---
+
+<BaseLayout
+  titulo="Trilha de Química Inorgânica"
+  descricao="Os 16 módulos da trilha de Química Inorgânica do Chem Livre, da estrutura atômica à bioinorgânica."
+>
+  <div class="container pagina">
+    <header class="cabeca">
+      <p class="rotulo sobretitulo">Trilha</p>
+      <h1>Química Inorgânica</h1>
+      <p class="intro">
+        {modulos.length} módulos, na ordem em que um conceito apoia o próximo.
+        {disponiveis === 0 ? ' Os primeiros estão em preparação.' : ` ${disponiveis} já disponíveis.`}
+      </p>
+    </header>
+
+    <aside class="cartao reservado" aria-labelledby="titulo-progresso">
+      <h2 id="titulo-progresso" class="rotulo">Seu progresso</h2>
+      <p class="legenda">
+        Seu progresso chega com a criação de conta: módulos concluídos, sequência de dias e revisão
+        espaçada.
+      </p>
+    </aside>
+
+    <ol class="lista">
+      {
+        modulos.map((modulo) => (
+          <li>
+            <CartaoModulo modulo={modulo} nivel="h2" />
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</BaseLayout>
+
+<style>
+  .pagina {
+    display: grid;
+    gap: var(--espaco-5);
+    padding-block: var(--espaco-5);
+  }
+  .cabeca {
+    display: grid;
+    gap: var(--espaco-3);
+  }
+  .sobretitulo {
+    color: var(--destaque-texto);
+  }
+  .intro {
+    max-width: var(--largura-leitura);
+  }
+  .reservado {
+    display: grid;
+    gap: var(--espaco-2);
+    border-style: dashed;
+  }
+  .lista {
+    display: grid;
+    gap: var(--espaco-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  /* Desktop: progresso numa coluna lateral, módulos na principal. */
+  @media (min-width: 1024px) {
+    .pagina {
+      grid-template-columns: 1fr minmax(0, 2fr);
+      align-items: start;
+    }
+    .cabeca {
+      grid-column: 1 / -1;
+    }
+    .reservado {
+      position: sticky;
+      top: var(--espaco-4);
+    }
+  }
+</style>

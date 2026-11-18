@@ -117,3 +117,32 @@ Quando o próprio computador ou celular do aluno faz o trabalho e nada é enviad
 **Metadados**
 Informações escondidas dentro de um arquivo: autor, data de criação, programa usado. Não aparecem na página, mas vão junto com ele.
 *Analogia:* a etiqueta colada no fundo do frasco: você não vê de frente, mas quem pegar o frasco lê.
+
+**npm e dependências**
+O npm baixa as bibliotecas que o projeto usa (as *dependências*) para a pasta `node_modules/`. A lista fica no
+`package.json`, e as versões exatas no `package-lock.json`.
+*Analogia:* o `package.json` é a lista de reagentes do roteiro; o `package-lock.json` anota o lote e o fabricante
+de cada um, para que o experimento dê o mesmo resultado em qualquer laboratório.
+
+**Construção (*build*)**
+O momento em que o Astro transforma textos e componentes em páginas HTML prontas, na pasta `dist/`.
+*Analogia:* a síntese: dos reagentes (arquivos-fonte) sai o produto (o site), que é o que vai para o "frasco" público.
+
+**Servidor de desenvolvimento (`npm run dev`)**
+Uma versão do site que roda só no seu computador e se atualiza a cada mudança que você salva.
+*Analogia:* a bancada de testes, antes de levar o resultado para a apresentação.
+
+**Coleção de conteúdo e esquema**
+Uma *coleção* é um grupo de arquivos do mesmo tipo (os 16 módulos). O *esquema* (`src/content.config.ts`) diz quais
+campos cada arquivo precisa ter; se faltar um, a construção para e aponta o erro.
+*Analogia:* o formulário padrão do caderno de laboratório: sem data, massa ou responsável, o registro não é aceito.
+
+**GitHub Actions**
+Robôs do GitHub que executam tarefas sozinhos quando algo acontece no repositório. O nosso constrói e publica o site
+a cada envio (`push`).
+*Analogia:* o técnico do laboratório que, toda vez que chega uma amostra, já faz a análise de rotina.
+
+**Overrides (npm)**
+Uma regra no `package.json` que obriga todas as bibliotecas a usarem a mesma versão de uma dependência. Usamos para
+haver um só KaTeX no projeto.
+*Analogia:* padronizar uma solução estoque para todo o laboratório, em vez de cada bancada preparar a sua.

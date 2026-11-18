@@ -1,0 +1,61 @@
+---
+// Rodape.astro — licenças (CC BY 4.0 e MIT) e link para o código.
+// A atribuição segue o LICENSE-CONTEUDO.md: "Chem Livre, por Gabriel Borges".
+import Simbolo from './Simbolo.astro';
+
+const repositorio = 'https://github.com/bieelborges/ChemLivre';
+const ano = 2026;
+---
+
+<footer class="rodape">
+  <div class="container conteudo">
+    <p class="assinatura">
+      <Simbolo />
+      <span><strong>Chem Livre</strong>, por Gabriel Borges. Química sem muros.</span>
+    </p>
+    <ul class="legenda">
+      <li>
+        Conteúdo sob
+        <a href="https://creativecommons.org/licenses/by/4.0/deed.pt-br" rel="license">CC BY 4.0</a>
+      </li>
+      <li>Código sob <a href={`${repositorio}/blob/main/LICENSE`}>MIT</a></li>
+      <li>
+        Fontes sob
+        <a href={`${repositorio}/tree/main/chem-livre-marca/fonts`}>SIL OFL 1.1</a>
+      </li>
+      <li><a href={repositorio}>Código-fonte no GitHub</a></li>
+    </ul>
+    <p class="legenda">© {ano} Gabriel Borges</p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    margin-top: var(--espaco-6);
+    padding-block: var(--espaco-5);
+    border-top: var(--borda-fina) solid var(--borda);
+    background: var(--superficie);
+  }
+  .conteudo {
+    display: grid;
+    gap: var(--espaco-3);
+  }
+  .assinatura {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    color: var(--texto);
+  }
+  .assinatura :global(.simbolo) {
+    width: var(--espaco-4);
+    height: var(--espaco-4);
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espaco-2) var(--espaco-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

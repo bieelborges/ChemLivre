@@ -1,0 +1,47 @@
+---
+// PaginaEsqueleto.astro — modelo das páginas que ainda não têm conteúdo.
+// Mostra título, uma frase sobre o que vai existir ali e em que fase chega.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/caminhos';
+
+interface Props {
+  titulo: string;
+  descricao: string;
+  /** Quando a seção chega (ex.: "Fase 3"). */
+  previsao: string;
+}
+const { titulo, descricao, previsao } = Astro.props;
+---
+
+<BaseLayout titulo={titulo} descricao={descricao}>
+  <div class="container pagina">
+    <h1>{titulo}</h1>
+    <p class="texto">{descricao}</p>
+    <slot />
+    <div class="cartao aviso">
+      <p class="rotulo">Em breve</p>
+      <p class="legenda">Previsão: {previsao}. Enquanto isso, comece pela trilha.</p>
+      <a class="botao botao-secundario" href={url('/inorganica')}>Ir para a trilha</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .pagina {
+    display: grid;
+    gap: var(--espaco-4);
+    justify-items: start;
+    padding-block: var(--espaco-5);
+  }
+  .texto {
+    max-width: var(--largura-leitura);
+    font-size: var(--tamanho-h3);
+    line-height: var(--linha-h3);
+  }
+  .aviso {
+    display: grid;
+    gap: var(--espaco-2);
+    justify-items: start;
+    border-style: dashed;
+  }
+</style>

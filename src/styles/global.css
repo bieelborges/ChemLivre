@@ -1,0 +1,240 @@
+/* ============================================================
+   global.css — estilos-base do site, construídos SÓ com tokens.
+   As cores, espaços e fontes vêm de chem-livre-marca/tokens.css.
+   Aqui ficam: as regras gerais (texto, títulos, links, foco) e
+   as peças que se repetem (botões, etiquetas, cartões).
+   ============================================================ */
+
+/* Tokens de layout do site (não são da marca: são da página). */
+:root {
+  --largura-maxima: 1200px; /* container máximo (prompt da interface) */
+  --largura-leitura: 68ch; /* linha confortável para texto corrido */
+  --altura-toque: 44px; /* área mínima para tocar com o dedo */
+  --borda-fina: 1px;
+  --contorno-foco: 2px;
+}
+
+/* No celular, os títulos grandes encolhem (só trocamos o token). */
+@media (max-width: 767px) {
+  :root {
+    --tamanho-display: var(--tamanho-h1);
+    --linha-display: var(--linha-h1);
+    --tamanho-h1: var(--tamanho-h2);
+    --linha-h1: var(--linha-h2);
+  }
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto-corpo);
+  font-family: var(--fonte-texto);
+  font-size: var(--tamanho-corpo);
+  line-height: var(--linha-corpo);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+.display {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.display {
+  font-size: var(--tamanho-display);
+  line-height: var(--linha-display);
+  letter-spacing: var(--espacamento-display);
+}
+
+h1 {
+  font-size: var(--tamanho-h1);
+  line-height: var(--linha-h1);
+  letter-spacing: var(--espacamento-h1);
+}
+
+h2 {
+  font-size: var(--tamanho-h2);
+  line-height: var(--linha-h2);
+  letter-spacing: var(--espacamento-h2);
+}
+
+h3 {
+  font-family: var(--fonte-texto);
+  font-size: var(--tamanho-h3);
+  line-height: var(--linha-h3);
+  font-weight: 700;
+  color: var(--texto);
+}
+
+a {
+  color: var(--destaque-texto);
+  text-underline-offset: 0.2em;
+}
+
+code,
+.mono {
+  font-family: var(--fonte-mono);
+  font-size: var(--tamanho-formula);
+  line-height: var(--linha-formula);
+}
+
+.legenda {
+  font-size: var(--tamanho-legenda);
+  line-height: var(--linha-legenda);
+  font-weight: 500;
+  color: var(--texto-secundario);
+}
+
+.rotulo {
+  font-family: var(--fonte-texto);
+  letter-spacing: normal;
+  font-size: var(--tamanho-rotulo);
+  line-height: var(--linha-rotulo);
+  font-weight: 600;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Foco visível em TUDO que é interativo (navegação pelo teclado). */
+:focus-visible {
+  outline: var(--contorno-foco) solid var(--destaque);
+  outline-offset: var(--contorno-foco);
+}
+
+/* Quem pediu menos animação no sistema não recebe animação. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Peças de layout ---------- */
+.container {
+  width: 100%;
+  max-width: var(--largura-maxima);
+  margin-inline: auto;
+  padding-inline: var(--espaco-3);
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: var(--espaco-6);
+  }
+}
+
+/* Texto escondido na tela, mas lido pelo leitor de tela. */
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* "Pular para o conteúdo": aparece só quando recebe foco pelo teclado. */
+.pular-conteudo {
+  position: absolute;
+  left: var(--espaco-3);
+  top: calc(-1 * var(--espaco-6));
+  z-index: 10;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-pilula);
+  background: var(--destaque);
+  color: var(--destaque-contraste);
+}
+
+.pular-conteudo:focus {
+  top: var(--espaco-2);
+}
+
+/* ---------- Cartões ---------- */
+.cartao {
+  background: var(--superficie);
+  border: var(--borda-fina) solid var(--borda);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-4);
+}
+
+/* ---------- Botões (pílula, altura mínima de toque) ---------- */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-2);
+  min-height: var(--altura-toque);
+  padding: var(--espaco-2) var(--espaco-4);
+  border: 0;
+  border-radius: var(--raio-pilula);
+  font: inherit;
+  font-size: var(--tamanho-rotulo);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Principal: o ÚNICO uso de --destaque como fundo. Um por tela. */
+.botao-principal {
+  background: var(--destaque);
+  color: var(--destaque-contraste);
+}
+
+.botao-secundario {
+  background: var(--destaque-suave);
+  color: var(--destaque-texto);
+}
+
+/* De área: usa o par da área definido por data-area (ver abaixo). */
+.botao-area {
+  background: var(--area-suave);
+  color: var(--area);
+}
+
+/* ---------- Etiquetas de área ---------- */
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--espaco-1) var(--espaco-3);
+  border-radius: var(--raio-pilula);
+  background: var(--area-suave, var(--fundo));
+  color: var(--area, var(--texto-secundario));
+  font-size: var(--tamanho-rotulo);
+  line-height: var(--linha-rotulo);
+  font-weight: 600;
+}
+
+/* Cada área escolhe o seu par cor + suave. Sem data-area = neutro. */
+[data-area="estrutura"] { --area: var(--destaque-texto); --area-suave: var(--destaque-suave); }
+[data-area="acidos"] { --area: var(--acidos); --area-suave: var(--acidos-suave); }
+[data-area="solidos"] { --area: var(--solidos); --area-suave: var(--solidos-suave); }
+[data-area="redox"] { --area: var(--redox); --area-suave: var(--redox-suave); }
+[data-area="coordenacao"] { --area: var(--coordenacao); --area-suave: var(--coordenacao-suave); }
+[data-area="elementos"] { --area: var(--elementos); --area-suave: var(--elementos-suave); }

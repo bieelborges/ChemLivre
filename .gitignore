@@ -28,3 +28,14 @@ dist/
 # Esboço visual do site (2,9 MB, com imagens e fontes embutidas).
 # Fica só no Mac, para consulta; decisão de 18/11/2026.
 Chem Livre — Esboço do site.html
+
+# Biblioteca de imagens de terceiros (várias licenças): fica fora do
+# repositório, EXCETO as 81 imagens selecionadas pelo Gabriel para uso
+# livre no site (licenças CC0, CC BY e MIT, com crédito em
+# CREDITOS-selecionadas.csv). (18/11/2026)
+# O "/*" ignora o conteúdo da pasta; o "!" abre uma exceção.
+biblioteca-imagens/*
+!biblioteca-imagens/selecionadas/
+
+# Pacotes .zip são cópias compactadas de pastas que já existem aqui.
+*.zip

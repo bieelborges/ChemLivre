@@ -38,7 +38,7 @@ Gabriel Borges, professor de Química (licenciado UFSC, Florianópolis). **Inici
 1. Esqueleto: Astro + framework das ilhas, tokens de design claro/escuro, fontes, página inicial, menu,
    página da trilha (16 módulos), layout de módulo, deploy
 2. Primeiro módulo completo (VSEPR): texto, Montador de geometria (âncora), `Molecula3D`,
-   motor de questões interativas (4 tipos), 5 questões comentadas — modelo para os demais
+   motor de questões interativas (4 tipos), 5 questões comentadas, ilustrações do registro C — modelo para os demais
 3. Laboratório virtual: 1º experimento dos roteiros de referência + modo demonstração (aprovado: Exp. 4, [Co(acac)₃] + UV-Vis)
 4. Equipamento por dentro: espectrofotômetro UV-Vis (rolagem com GSAP), ligado à curva de calibração do laboratório
 5. Demais módulos da trilha, um por vez (subfases 5.1, 5.2…)
@@ -74,11 +74,17 @@ Detalhe de cada módulo (conteúdo, recurso âncora, fontes de dados): `PLANO_MO
   **model-viewer** para realidade aumentada (bônus, carregado no clique)
 - **Plotly** fora do padrão (pesado); só se surgir gráfico 3D de superfície
 - **GitHub Pages** via GitHub Actions
+- Detalhes da Fase 1 (18/11/2026): **Astro 7** usa o leitor Sätteri por padrão; as fórmulas exigem
+  `markdown.processor: unified({...})` de `@astrojs/markdown-remark`. KaTeX numa versão só via `overrides` no package.json.
+  Site em `bieelborges.github.io/ChemLivre` (`base: '/ChemLivre'`); links internos sempre por `url()` de `src/lib/caminhos.ts`.
+  O site importa `chem-livre-marca/tokens.css` direto (sem cópia). Commits usam o e-mail *noreply* do GitHub.
 - Progresso atrás de `src/lib/progresso.ts` (implementado só na Fase 7); tutor atrás de `src/lib/tutor.ts` (hoje só mostra as dicas)
 
 ## Identidade visual (recebida em 13/11/2026)
 - **Fonte única da marca: pasta `chem-livre-marca/`** (README com voz e regras, `tokens.css`, `tokens.json`, logos, fontes).
   Regras de interface e mapa do site: `PROMPT_IDENTIDADE_INTERFACE.md` (ajustado em 17/11/2026).
+  **Ilustrações:** seguir `docs/ESTILO_ILUSTRACAO.md` (registros A vidrarias, B equipamentos por dentro com a skill Anatomy,
+  C moléculas, D ícones/GHS), aplicado **por fase** (decisão de 18/11/2026): C na Fase 2, A na 3, B na 4.
   Esboço visual (6 telas): `Chem Livre — Esboço do site.html` (usa a numeração antiga de 12 módulos; vale a nova).
 - Tokens extras: `--texto-corpo`, `--destaque-contraste`, `--destaque-suave`, `--destaque-texto`, pares `<area>`/`<area>-suave`,
   espaços `--espaco-1..6` (4/8/16/24/40/64 px), raios 10/20/999 px. Nenhuma cor ou tamanho solto no código.
@@ -110,6 +116,10 @@ Detalhe de cada módulo (conteúdo, recurso âncora, fontes de dados): `PLANO_MO
 - Escrever o conteúdo com palavras próprias; **não publicar** PDFs, trechos longos, figuras ou tabelas copiadas.
   Artigos podem ser citados e linkados.
 - Trabalhos de colegas só com autorização e crédito.
+- `biblioteca-imagens/` (imagens de terceiros) fica fora do Git, **exceto `selecionadas/`**: as 81 imagens escolhidas pelo
+  Gabriel para uso livre no site (conferido em 18/11/2026: 34 CC0, 33 CC BY 3.0 Servier, 7 CC BY 4.0, 7 MIT), com
+  `CREDITOS-selecionadas.csv` e os textos das licenças. Grupo 3 (Servier) = só referência para redesenhar.
+  Toda imagem usada aparece em `/creditos`. Licenças aceitas: CC0, CC BY, MIT, ISC (nunca BY-SA, BY-NC).
 - Inventário: `referencias/inventario.csv` (arquivo, autor, origem, tipo, bloco, status, observacao).
 - Os 3 PDFs "Notas dos testes de Química de Coordenação…" (dados de alunos) foram removidos (conferido em 17/11/2026).
 - Roteiros de aula prática (acervo privado): servem **só como referência de quais experimentos fazer** (decisão de 17/11/2026: a autorização
